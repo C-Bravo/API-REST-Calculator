@@ -1,8 +1,9 @@
 pipeline {
     agent any
-    // environment {
-    //     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-    // }
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('DockerHubToken')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -38,15 +39,15 @@ pipeline {
                 }
             }
         }
-        // stage('Push Docker Image') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry('https://index.docker.io/v1/', 'DOCKERHUB_CREDENTIALS') {
-        //                 docker.image("tu-imagen:latest").push('latest')
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', 'DOCKERHUB_CREDENTIALS') {
+                        docker.image("api-rest-calculadora:latest").push('latest')
+                    }
+                }
+            }
+        }
     }
     post {
         always {
