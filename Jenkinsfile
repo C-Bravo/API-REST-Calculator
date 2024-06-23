@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = 'DockerHubToken'
+        registryCredentials = 'DockerHubCredentials'
     }
+
 
     stages {
         stage('Checkout') {
@@ -43,7 +44,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
+                    docker.withRegistry('https://index.docker.io/v1/', registryCredentials) {
                         docker.image("api-rest-calculadora:latest").push('latest')
                     }
                 }
