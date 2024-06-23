@@ -1,7 +1,8 @@
 pipeline {
     agent any
+
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('DockerHubToken')
+        DOCKERHUB_CREDENTIALS = 'DockerHubToken'
     }
 
     stages {
@@ -42,7 +43,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'DOCKERHUB_CREDENTIALS') {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
                         docker.image("api-rest-calculadora:latest").push('latest')
                     }
                 }
