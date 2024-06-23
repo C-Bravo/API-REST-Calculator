@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/C-Bravo/API-REST-Calculadora'
+                git 'https://github.com/C-Bravo/API-REST-Calculator'
             }
         }
         stage('Build') {
