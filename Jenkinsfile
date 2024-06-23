@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        registry = 'carlosbravorev/api-rest-calculator'
         registryCredentials = 'DockerHubCredentials'
     }
 
@@ -44,8 +45,9 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
                     docker.withRegistry('https://index.docker.io/v1/', registryCredentials) {
-                        docker.image("api-rest-calculadora:latest").push('latest')
+                        dockerImage.push()
                     }
                 }
             }
